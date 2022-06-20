@@ -21,6 +21,11 @@ class CycleDFS {
     static boolean checkCycle(int node, int parent, int vis[], ArrayList<ArrayList<Integer>> adj) {
         vis[node] = 1;
         for (int i : adj.get(node)) {
+            if (vis[i] == 0)
+                if (checkCycle(i, node, vis, adj))
+                    return true;
+                else if (i != parent)
+                    return true;
 
         }
 
@@ -34,7 +39,6 @@ class CycleDFS {
             if (vis[i] == 0) {
                 if (checkCycle(i, -1, vis, adj))
                     return true;
-
             }
         }
         return false;
@@ -56,7 +60,7 @@ class CycleDFS {
             int y = sc.nextInt();
             createList(adj, x, y);
         }
-        printList(adj, v);
+        System.out.println(startDFS(adj, v));
     }
 
 }

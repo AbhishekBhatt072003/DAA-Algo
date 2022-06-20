@@ -29,5 +29,4 @@ class AdjList {
             System.out.println();
         }
     }
-
 }

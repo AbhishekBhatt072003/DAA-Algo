@@ -9,14 +9,29 @@ class TopologicalDFS {
 
     }
 
-    static void printList(ArrayList<ArrayList<Integer>> adj, int v) {
-        for (int i = 0; i < v; i++) {
-            System.out.print(i);
-            for (int j : adj.get(i))
-                System.out.print("->" + j);
-
-            System.out.println();
+    static void topologicalSortUtil(ArrayList<ArrayList<Integer>> adj, boolean vis[], int node, Stack<Integer> stack) {
+        vis[node] = true;
+        for (int j : adj.get(node)) {
+            if (!vis[j]) {
+                topologicalSortUtil(adj, vis, j, stack);
+            }
         }
+        stack.push(node);
+    }
+
+    static void topologicalSort(ArrayList<ArrayList<Integer>> adj, int n) {
+        Stack<Integer> stack = new Stack<Integer>();
+        boolean vis[] = new boolean[n];
+        for (int i = 0; i < n; i++) {
+            if (vis[i] == false) {
+                topologicalSortUtil(adj, vis, i, stack);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop() + " ");
+        }
+
     }
 
     public static void main(String args[]) {
@@ -35,7 +50,7 @@ class TopologicalDFS {
             createList(adj, x, y);
         }
 
-        printList(adj, v);
+        topologicalSort(adj, v);
 
     }
 
